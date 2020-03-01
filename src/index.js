@@ -1,9 +1,19 @@
 document.addEventListener('DOMContentLoaded', function(event) {
-    var map = L.map('map').setView([23.973875, 120.982024], 8);
+    var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+    var hikebikemapUrl = 'https://tiles.wmflabs.org/hikebike/{z}/{x}/{y}.png';
 
-    var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
     var osm = new L.TileLayer(osmUrl);
-    map.addLayer(osm);
+    var hikebikemap = new L.TileLayer(hikebikemapUrl);
+    
+    var map = L.map('map', {
+        center: [23.973875, 120.982024],
+        zoom: 8,
+        layers: osm
+    });
+    L.control.layers({
+        "OpenStreetMap": osm,
+        "HikeBikeMap": hikebikemap
+    }).addTo(map);
 
     var drawnItems = new L.FeatureGroup();
     map.addLayer(drawnItems);
